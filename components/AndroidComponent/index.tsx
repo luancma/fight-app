@@ -2,19 +2,11 @@ import React from "react";
 import { StatusBar, View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WeekCalendarProps } from "../../utils/generateWeekList";
-import { IEventListData, IEventType } from "../../utils/mocks/events";
+import { IEventListData, IEventType, eventsList } from '../../utils/mocks/events';
 import { WEEK } from "../../utils/weekList";
 import { EventCalendar } from "../EventCalendar";
 import { EventDetails } from "../ViewDetails";
-
-type NewType = {
-  handleIncrementWeek: () => void;
-  handleSelectADay: (day: Date) => void;
-  selectedDay: Date;
-  weekList: WeekCalendarProps[];
-  scheduledEventsList: IEventListData[];
-  validatedEventDay: any | null;
-};
+import { AndroidComponentType } from "./types";
 
 export function AndroidComponent({
   handleIncrementWeek,
@@ -22,8 +14,7 @@ export function AndroidComponent({
   selectedDay,
   weekList,
   validatedEventDay,
-}: NewType) {
-  console.log(11111, { validatedEventDay });
+}: AndroidComponentType) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
@@ -32,10 +23,11 @@ export function AndroidComponent({
         nextWeek={handleIncrementWeek}
         handleSelectADay={handleSelectADay}
         pressedDay={selectedDay}
+        eventList={eventsList}
       />
 
       {validatedEventDay && (
-        <View>
+        <View testID="eventDetails">
           <Text>{WEEK[validatedEventDay.day].day}</Text>
           {validatedEventDay.event.map((eventItem: IEventType) => (
             <EventDetails event={eventItem} key={eventItem.id} />

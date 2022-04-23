@@ -1,23 +1,10 @@
-import { render } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { EventCalendar } from ".";
 import { IEventCalendarProps } from "./eventCalendarTypes";
+import { IEventListData } from '../../utils/mocks/events'
+import { generateDays } from "../../utils/mocks/mockGenerateWeekDays";
 
-let days = [1, 2, 3, 4, 5, 6, 7];
-
-const generateDays = () => {
-  const result = [];
-  for (const iterator of days) {
-    const generatedDay = {
-      uuid: `foo-id-${iterator}`,
-      formatted: `12/${iterator}/2020`,
-      date: new Date(`2020-12-${iterator}:00:00.000Z`),
-      day: iterator,
-    };
-    result.push(generatedDay);
-  }
-  return result;
-};
 
 describe("Should test the EventCalendar", () => {
   const mockEventCalendarProps: IEventCalendarProps = {
@@ -41,4 +28,37 @@ describe("Should test the EventCalendar", () => {
       expect(value).toBe(index + 1)
     });
   });
+
+  test('Should dispatch the click function then press the button', () => { 
+    const mockEvent: IEventListData[] = [
+      {
+        id: 'foo-id-1',
+        day: 2,
+        event: [
+          {
+            id: 'foo-event-id-1',
+            name: "Muay Thai",
+            tutor: "Nguyen",
+            scheduledTime: "10:00",
+            duration: 1,
+          },
+        ],
+      },
+    ]
+
+    const handleSelectADayMock = jest.fn();
+    const { getByText } = render(
+      <EventCalendar
+        week={mockEventCalendarProps.week}
+        nextWeek={mockEventCalendarProps.nextWeek}
+        handleSelectADay={handleSelectADayMock}
+        pressedDay={mockEventCalendarProps.pressedDay}
+        eventList={mockEvent}
+      />
+      );
+      const eventDay = getByText('7')
+      expect(eventDay).toBeTruthy();
+      fireEvent.press(eventDay, handleSelectADayMock);
+      expect(handleSelectADayMock).toBeCalled();
+   })
 });
