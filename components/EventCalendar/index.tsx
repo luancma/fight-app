@@ -11,13 +11,13 @@ import {
   Pressable,
 } from "react-native";
 import { WEEK } from "../../utils/weekList";
-import { eventsList } from "../../utils/mocks/events";
 import { IEventCalendarProps } from "./eventCalendarTypes";
 export const EventCalendar = ({
   week,
   nextWeek,
   handleSelectADay,
   pressedDay,
+  eventList = []
 }: IEventCalendarProps) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [extraDate, setExtraDate] = useState(week);
@@ -38,7 +38,7 @@ export const EventCalendar = ({
         const day = WEEK.filter((w) => w.dayOfWeek === item.date.getDay())[0]
           .day;
         const showPressedBorder = pressedDay;
-        const showDayWithValues = eventsList.find(
+        const showDayWithValues = eventList.find(
           (activity) => activity?.day === item?.date.getDay()
         );
         return (
@@ -56,9 +56,9 @@ export const EventCalendar = ({
             <Text>{day.substring(0, 3)}</Text>
             <Pressable
               onPress={() => {
+                console.log("Pressed");
                 if (!isToday(item.date)) {
                   handleSelectADay(item.date);
-                  console.log("Pressed");
                 }
               }}
               style={{

@@ -55,7 +55,6 @@ export default function App() {
     [selectedDay]
   );
 
-  console.log({ test })
   return Platform.OS === "web" ? (
     <WebWrapper>
       <View style={styles.container}>
@@ -74,7 +73,6 @@ export default function App() {
       handleSelectADay={handleSelectADay}
       selectedDay={selectedDay}
       weekList={week}
-      scheduledEventsList={eventsList}
       validatedEventDay={test}
     />
   );
