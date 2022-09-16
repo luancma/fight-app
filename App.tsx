@@ -24,9 +24,9 @@ const WebWrapper = ({ children }: { children: ReactNode }) => {
   return <View>{children}</View>;
 };
 export default function App() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(Date.now());
   const [week, setWeek] = useState<WeekCalendarProps[]>([]);
-  const [selectedDay, setSelectedDay] = useState<any | null>(null);
+  const [selectedDay, setSelectedDay] = useState<any | null>(new Date());
   const handleIncrementWeek = useCallback(() => {
     const lastDayObject = week[week.length - 1];
     const lastWeek = generateWeekList(lastDayObject?.date, true);
@@ -37,7 +37,6 @@ export default function App() {
     const result = eventsList.filter(
       (event) => event?.day === new Date(selectedDay).getDay()
     );
-    result.length ? console.log(result[0]) : console.log(null);
     if (result.length) {
       return result[0];
     }
