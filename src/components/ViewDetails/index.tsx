@@ -8,7 +8,9 @@ export function EventDetails({ event }: { event: IEventType }) {
     tutor,
     scheduledTime
   } = event
-  console.log(name,
+  console.log(
+    "EventDetails component",
+    name,
     tutor,
     scheduledTime)
   return (

@@ -8,10 +8,12 @@ import React, {
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Platform } from "react-native";
 import "react-native-get-random-values";
-import { EventCalendar } from "./components/EventCalendar";
-import { generateWeekList } from "./utils/generateWeekList";
-import { AndroidComponent } from "./components/AndroidComponent";
-import { eventsList, IEventListData } from "./utils/mocks/events";
+import { EventCalendar } from "./src/components/EventCalendar";
+import { generateWeekList } from "./src/utils/generateWeekList";
+import { AndroidComponent } from "./src/components/AndroidComponent";
+import { eventsList, IEventListData } from "./src/utils/mocks/events";
+import theme from "./src/theme/default";
+import { ThemeProvider } from "styled-components"
 
 interface WeekCalendarProps {
   uuid: string;
@@ -54,26 +56,30 @@ export default function App() {
     [selectedDay]
   );
 
-  return Platform.OS === "web" ? (
-    <WebWrapper>
-      <View style={styles.container}>
-        <StatusBar style="auto" />
-        <EventCalendar
-          week={week}
-          nextWeek={handleIncrementWeek}
+  return (
+    <ThemeProvider theme={theme}>
+      {Platform.OS === "web" ? (
+        <WebWrapper>
+          <View style={styles.container}>
+            <StatusBar style="auto" />
+            <EventCalendar
+              week={week}
+              nextWeek={handleIncrementWeek}
+              handleSelectADay={handleSelectADay}
+              pressedDay={selectedDay}
+            />
+          </View>
+        </WebWrapper>
+      ) : (
+        <AndroidComponent
+          handleIncrementWeek={handleIncrementWeek}
           handleSelectADay={handleSelectADay}
-          pressedDay={selectedDay}
+          selectedDay={selectedDay}
+          weekList={week}
+          validatedEventDay={test}
         />
-      </View>
-    </WebWrapper>
-  ) : (
-    <AndroidComponent
-      handleIncrementWeek={handleIncrementWeek}
-      handleSelectADay={handleSelectADay}
-      selectedDay={selectedDay}
-      weekList={week}
-      validatedEventDay={test}
-    />
+      )}
+    </ThemeProvider>
   );
 }
 

@@ -28,18 +28,16 @@ export const EventCalendar = ({
   eventList = [],
 }: IEventCalendarProps) => {
   const flatListRef = useRef<FlatList>(null);
-  const showSelectedDayIndicator = (item) => {
-    if (item.date === pressedDay && !isToday(item.date)) {
-      return true;
-    }
-  };
+
+  const showSelectedDayIndicator = (item) =>
+    item.date === pressedDay && !isToday(item.date);
 
   const itemListDetails = (item: ListItem) => {
-    const day = WEEK.filter((w) => w.dayOfWeek === item.date.getDay())[0].day;
-    const showPressedBorder = pressedDay;
+    const dayOfWeek = WEEK.filter((w) => w.dayOfWeek === item.date.getDay())[0].day;
     const showDayWithValues = eventList.find(
       (activity) => activity?.day === item?.date.getDay()
     );
+
     return (
       <View style={styles.itemWrapper}>
         {showDayWithValues && <View style={styles.eventDayIndicator} />}
@@ -48,7 +46,7 @@ export const EventCalendar = ({
             color: isToday(item.date) ? "red" : "black",
           }}
         >
-          {day.substring(0, 3)}
+          {dayOfWeek.substring(0, 3)}
         </Text>
         <Pressable
           onPress={() => handleSelectADay(item.date)}

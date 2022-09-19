@@ -4,19 +4,19 @@ import { EventDetails } from "./index";
 import { IEventType } from "../../utils/mocks/events";
 
 describe("Testing EventDetails.test", () => {
-  it("should render the EventDetails component", () => {
-    const mockEvent: IEventType = {
+     const mockEvent: IEventType = {
       id: "foo-id",
-      name: "Exemple name",
+      name: "Example name",
       tutor: "Tutor name",
       scheduledTime: "12:00",
       duration: 1,
     };
+  it("should render the EventDetails component", () => {
     const { debug, getByText } = render(
       <EventDetails event={mockEvent} />
     );
     debug();
-    expect(getByText(/exemple name/i)).toBeTruthy();
+    expect(getByText(/example name/i)).toBeTruthy();
     expect(getByText(/tutor name/i)).toBeTruthy();
     expect(getByText(/12:00/i)).toBeTruthy();
   });
