@@ -9,8 +9,20 @@ import {
   Dimensions,
   TouchableOpacity,
   Pressable,
+  PixelRatio,
+  TouchableWithoutFeedback,
 } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import { WEEK } from "../../utils/weekList";
+import {
+  CurrentDayIndicator,
+  EventDayIndicator,
+  ListItem,
+  StyledContainer,
+  StyledPressable,
+  TextDayOfWeek,
+  TextWeekDay,
+} from "./EventCalendar.styles";
 import { IEventCalendarProps } from "./eventCalendarTypes";
 
 type ListItem = {
@@ -33,57 +45,32 @@ export const EventCalendar = ({
     item.date === pressedDay && !isToday(item.date);
 
   const itemListDetails = (item: ListItem) => {
-    const dayOfWeek = WEEK.filter((w) => w.dayOfWeek === item.date.getDay())[0].day;
+    const dayOfWeek = WEEK.filter((w) => w.dayOfWeek === item.date.getDay())[0]
+      .day;
     const showDayWithValues = eventList.find(
       (activity) => activity?.day === item?.date.getDay()
     );
 
     return (
-      <View style={styles.itemWrapper}>
-        {showDayWithValues && <View style={styles.eventDayIndicator} />}
-        <Text
-          style={{
-            color: isToday(item.date) ? "red" : "black",
-          }}
-        >
-          {dayOfWeek.substring(0, 3)}
-        </Text>
-        <Pressable
-          onPress={() => handleSelectADay(item.date)}
-          style={
-            isToday(item.date)
-              ? {
-                  width: 32,
-                  height: 32,
-                  borderRadius: 16,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "red",
-                }
-              : {
-                  width: 32,
-                  height: 32,
-                  borderRadius: 16,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }
-          }
-        >
-          {showSelectedDayIndicator(item) && (
-            <View
-              testID="activatedDayIndicator"
-              style={styles.activatedDateIndicator}
-            />
-          )}
-          <Text
-            style={isToday(item.date) ? { color: "white" } : { color: "black" }}
+      <TouchableWithoutFeedback onPress={() => handleSelectADay(item.date)}>
+        <ListItem screenWidth={Dimensions.get("window").width}>
+          {showDayWithValues && <EventDayIndicator />}
+          <TextWeekDay
+            isToday={isToday(item.date)}
+            offsetH={Dimensions.get("window").height}
+            adjustsFontSizeToFit={true}
+            numberOfLines={1}
           >
-            {item.day}
-          </Text>
-        </Pressable>
-      </View>
+            {dayOfWeek.substring(0, 3)}
+          </TextWeekDay>
+          <StyledPressable isToday={isToday(item.date)} />
+          {showSelectedDayIndicator(item) && (
+            <CurrentDayIndicator 
+            testID="activatedDayIndicator" />
+          )}
+          <TextDayOfWeek isToday={isToday(item.date)}>{item.day}</TextDayOfWeek>
+        </ListItem>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -107,9 +94,7 @@ export const EventCalendar = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+
   containerListStyle: {
     display: "flex",
     flexGrow: 1,
@@ -117,38 +102,5 @@ const styles = StyleSheet.create({
   listStyle: {
     flexGrow: 0,
     height: 80,
-  },
-  item: {
-    display: "flex",
-    alignItems: "center",
-  },
-  textItem: {
-    fontSize: 48,
-    fontWeight: "700",
-  },
-  itemWrapper: {
-    width: Dimensions.get("window").width / 7,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  activatedDateIndicator: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    height: 4,
-    width: "100%",
-    backgroundColor: "red",
-    borderRadius: 50,
-  },
-  eventDayIndicator: {
-    position: "absolute",
-    top: "10%",
-    width: 8,
-    marginLeft: -8,
-    height: 8,
-    backgroundColor: "red",
-    borderRadius: 8,
   },
 });

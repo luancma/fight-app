@@ -13,6 +13,7 @@ import { EventCalendar } from "../EventCalendar";
 import { EventDetails } from "../ViewDetails";
 import { FloatButton, FloatButtonText, StyledContainer } from "./Styles";
 import { AndroidComponentType } from "./types";
+import defaultStyle from "../../theme/default";
 
 export function AndroidComponent({
   handleIncrementWeek,
@@ -24,7 +25,7 @@ export function AndroidComponent({
   console.log({ validatedEventDay });
   return (
     <StyledContainer>
-      <StatusBar />
+      <StatusBar backgroundColor={defaultStyle.COLORS.BLUE_600} />
       <EventCalendar
         week={weekList}
         nextWeek={handleIncrementWeek}
