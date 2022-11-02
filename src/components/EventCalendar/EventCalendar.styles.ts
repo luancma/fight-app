@@ -12,6 +12,8 @@ const ListItem = styled.SafeAreaView<{
   justify-content: center;
   align-items: center;
   border-bottom-width: ${dp(4)}px;
+  height: 80px;
+  background-color: blueviolet;
   border-bottom-color: ${({ theme }) => theme.COLORS.BLUE_500};
 `;
 
@@ -23,6 +25,7 @@ const TextWeekDay = styled.Text<{
     isToday ? theme.COLORS.BLUE_600 : theme.COLORS.BLUE_GRAY_900};
   font-size: 16px;
   padding: 4px 0px;
+  background-color: 4px;
 `;
 
 const TextDayOfWeek = styled.Text<{
@@ -31,7 +34,6 @@ const TextDayOfWeek = styled.Text<{
   color: ${({ theme, isToday }) =>
     isToday ? theme.COLORS.WHITE : theme.COLORS.BLUE_GRAY_900};
   font-size: 16px;
-  padding-bottom: 4px;
 `;
 
 const StyledPressable = styled.Pressable<{

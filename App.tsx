@@ -14,6 +14,9 @@ import { AndroidComponent } from "./src/components/AndroidComponent";
 import { eventsList, IEventListData } from "./src/utils/mocks/events";
 import theme from "./src/theme/default";
 import { ThemeProvider } from "styled-components"
+import EStyleSheet from "react-native-extended-stylesheet";
+
+EStyleSheet.build();
 
 interface WeekCalendarProps {
   uuid: string;
