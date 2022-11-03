@@ -37,10 +37,6 @@ export function AndroidComponent({
         validatedEventDay={validatedEventDay}
         selectedDay={selectedDay}
       />
-
-      <FloatButton>
-        <FloatButtonText>+</FloatButtonText>
-      </FloatButton>
     </StyledContainer>
   );
 }

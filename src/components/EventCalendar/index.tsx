@@ -49,35 +49,44 @@ export const EventCalendar = ({
 
     return (
       <TouchableWithoutFeedback onPress={() => handleSelectADay(item.date)}>
-        <ListItem screenWidth={Dimensions.get("window").width}>
-          {showDayWithValues && <EventDayIndicator />}
-          <TextWeekDay
-            isToday={isToday(item.date)}
-            offsetH={Dimensions.get("window").height}
-            adjustsFontSizeToFit={true}
-            numberOfLines={1}
-          >
-            {dayOfWeek.substring(0, 3)}
-          </TextWeekDay>
-          {showSelectedDayIndicator(item) && (
-            <CurrentDayIndicator
-              testID="activatedDayIndicator" />
-          )}
-          <View>
-            <View style={styles.backgroundStyle}>
-              <TextDayOfWeek isToday={isToday(item.date)}>{item.day}</TextDayOfWeek>
-            </View>
-            {
-              
-            }
-            {
-              isToday(item.date) && (
-                <View style={styles.circleIndicator} />
-              )
-            }
+        <View style={styles.container1}>
+          <Text style={styles.testTextDayName}>{dayOfWeek.substring(0, 3)}</Text>
+          <View style={styles.testContainer}>
+            <View style={styles.testCircle} />
+            <Text>{item.day}</Text>
           </View>
-        </ListItem>
+        </View>
       </TouchableWithoutFeedback>
+      // <TouchableWithoutFeedback onPress={() => handleSelectADay(item.date)}>
+      //   <ListItem screenWidth={Dimensions.get("window").width}>
+      //     {showDayWithValues && <EventDayIndicator />}
+      //     <TextWeekDay
+      //       isToday={isToday(item.date)}
+      //       offsetH={Dimensions.get("window").height}
+      //       adjustsFontSizeToFit={true}
+      //       numberOfLines={1}
+      //     >
+      //       {dayOfWeek.substring(0, 3)}
+      //     </TextWeekDay>
+      //     {showSelectedDayIndicator(item) && (
+      //       <CurrentDayIndicator
+      //         testID="activatedDayIndicator" />
+      //     )}
+      //     <View>
+      //       <View style={styles.backgroundStyle}>
+      //         <TextDayOfWeek isToday={isToday(item.date)}>{item.day}</TextDayOfWeek>
+      //       </View>
+      //       {
+
+      //       }
+      //       {
+      //         isToday(item.date) && (
+      //           <View style={styles.circleIndicator} />
+      //         )
+      //       }
+      //     </View>
+      //   </ListItem>
+      // </TouchableWithoutFeedback>
     );
   };
 
@@ -103,6 +112,35 @@ export const EventCalendar = ({
 };
 
 const styles = EStyleSheet.create({
+  container1: {
+    backgroundColor: "green",
+    flexDirection: "column",
+    alignItems: "center",
+    paddingBottom: `${0.5/2}rem`
+  }, 
+  testTextDayName: {
+    paddingVertical: "0.5rem",
+    color: "white"
+  },
+  // start testing code
+  testContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "auto",
+    width: Dimensions.get("window").width / 7,
+    height: "2.4rem",
+  },
+  testCircle: {
+    width: "2.4rem",
+    height: "2.4rem",
+    backgroundColor: "red",
+    borderRadius: "2rem",
+    position: "absolute"
+  },
+  // end testing code
+
   container: {
     display: "flex",
   },
@@ -122,12 +160,12 @@ const styles = EStyleSheet.create({
     borderWidth: 1,
     position: 'absolute',
     left: Platform.OS === 'android' ? -6.6 : -5.7,
-    top: Platform.OS === 'android' ?  '0.10rem' : `${0.09}rem`,
+    top: Platform.OS === 'android' ? '0.10rem' : `${0.09}rem`,
     margin: 'auto',
     borderRadius: '1rem',
   },
   listStyle: {
     flexGrow: 0,
-    height: 80,
+    backgroundColor: 'blue',
   },
 });
